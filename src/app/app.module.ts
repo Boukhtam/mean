@@ -13,13 +13,18 @@ import { HeaderComponent } from './header/header.component';
 import { HomeComponent } from './home/home.component';
 import { AuthService } from './shared/services';
 
+import { DataComponent } from './data/data.component';
+import { ApiService } from './api.service';
+
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+
 export function appInitializerFactory(authService: AuthService) {
   return () => authService.checkTheUserOnTheFirstLoad();
 }
 
 @NgModule({
-  imports: [BrowserAnimationsModule, HttpClientModule, SharedModule, AppRoutingModule],
-  declarations: [AppComponent, HeaderComponent, HomeComponent],
+  imports: [BrowserAnimationsModule, HttpClientModule, SharedModule, AppRoutingModule, FormsModule, ReactiveFormsModule],
+  declarations: [AppComponent, HeaderComponent, HomeComponent, DataComponent],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
@@ -37,6 +42,7 @@ export function appInitializerFactory(authService: AuthService) {
       multi: true,
       deps: [AuthService],
     },
+    ApiService,
   ],
   bootstrap: [AppComponent],
 })

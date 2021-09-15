@@ -1,0 +1,43 @@
+<div [hidden]="!chart" >
+  <div class="row prtl_field_margin">
+    <div class="col-4 prtl_form_field_right">
+      <label for="pDate" class="control-label prtl_form_label">Choose date:</label>
+    </div>
+    <div class="col-4">
+      <form [formGroup]="datesForm">
+        <div class=" row">
+          <div class="col">
+            <div class="col-4 prtl_form_field_right">
+              <label for="pDate" class="control-label prtl_form_label">Select a year: </label>
+            </div>
+
+            <select
+              class="form-control"
+              formControlName="year"
+              >
+              <option value="" disabled>Choose a Year</option>
+              <option *ngFor="let year of years" [ngValue]="year">{{ year }}</option>
+            </select>
+          </div>
+
+          <div class="col">
+            <div class="col-4 prtl_form_field_right">
+              <label for="pDate" class="control-label prtl_form_label">Select a month: </label>
+            </div>
+
+            <select
+              class="form-control"
+              formControlName="month"
+              >
+              <option value="" disabled>Choose a Month</option>
+              <option *ngFor="let month of months" [ngValue]="month">{{ month }}</option>
+            </select>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="col-4">
+      <canvas #chart id="canvas">{{chart}}</canvas>
+    </div>
+  </div>
+</div>
