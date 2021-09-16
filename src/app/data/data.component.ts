@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { merge, Observable } from 'rxjs';
+import * as moment from 'moment';
 import { ApiService } from '../api.service';
 
 import { Chart, Point, registerables } from 'chart.js';
@@ -19,8 +20,8 @@ export class DataComponent implements OnInit {
   private data!: any;
   private backGroundColor: any[] = [];
   private borderColor: any[] = [];
-  years: any = ["1990", "1991"];
-  months: any = ["all", "Jan", "Feb", "Mar", "Apr"]
+  years: any = ["2019", "2020", "2021"];
+  months: any = ["all", ...moment.monthsShort()];
 
   constructor(
     private _api: ApiService,
@@ -29,7 +30,7 @@ export class DataComponent implements OnInit {
   }
 
   datesForm = this.fb.group({
-    year: [''],
+    year: [moment().format("YYYY")],
     month: ['all'],
   })
 
@@ -64,8 +65,8 @@ export class DataComponent implements OnInit {
       options: {
         responsive: true,
         parsing: {
-          xAxisKey: 'date',
-          yAxisKey: 'energy',
+          xAxisKey: '_id',
+          yAxisKey: 'energyPerday',
         }
       }
     })
@@ -82,6 +83,7 @@ export class DataComponent implements OnInit {
     this._api.loadData(this.datesForm.value)
     .subscribe((res: any) => {
       this.data = res
+      console.log({res})
 
       this.data.forEach(() => {
         const color = this.generateRandomColor(0.4)
